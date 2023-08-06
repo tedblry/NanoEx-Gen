@@ -7,7 +7,7 @@ The purpose of this code is to generate a simulated FASTQ file by utilizing the 
 Run the script using the following command:
 
 ```bash
-./Rand.py path_to_infile path_to_ref_g path_to_output_simulated_fastq
+./nanoexgen.py path_to_infile path_to_ref_g path_to_output_simulated_fastq
 ```
 
 Please specify the paths to the input FASTQ file (`infile`), reference genome (`ref_g`), and the desired output location for the simulated FASTQ file (`output_simulated_fastq`).
@@ -15,9 +15,16 @@ Please specify the paths to the input FASTQ file (`infile`), reference genome (`
 Example:
 
 ```bash
-./nanoexgen.py /path/to/experimental_data.fq /path/to/reference_genome.fasta /path/to/output/sim06_simulated_fastq.fq
+./nanoexgen.py /path/to/experimental_data.fq /path/to/reference_genome.fasta /path/to/output/simulated_fastq.fq
 ```
 
+To run the script, you would use a command like:
+
+If you're using a UNIX-based system, execute permissions with:
+
+```bash
+chmod +x nanoexgen.py
+```
 ## Functions
 
 - **readfq(fp)**: Generator function to read sequences from FASTQ files.
