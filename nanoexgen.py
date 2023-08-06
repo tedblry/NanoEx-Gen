@@ -2,6 +2,7 @@
 
 import argparse
 import random
+import os
 
 def readfq(fp):
     """
@@ -63,12 +64,29 @@ def generate_simulated_fastq(infile, ref_g, output_file, seed=519):
 
     random.seed(seed)
 
+    # Create the directory if it doesn't exist
+    output_directory = os.path.dirname(output_file)
+    if output_directory and not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
     with open(output_file, 'w') as out_f, open(infile, 'r') as in_f:
         for seq_name, seq, qual in readfq(in_f):
             start = random.randint(0, len(ref_sequence) - len(seq))
-            new_seq = ref_sequence[start:start+len(seq)]
-            out_f.write(f"@{seq_name}\n{new_seq}\n+\n{qual}\n")
+            new_seq = ref_sequence[start:start + len(seq)]
 
+            # If the sequence length is 0, skip writing this entry
+            if len(new_seq) == 0:
+                continue
+
+            # Adjust the length of the quality string to match the length of the simulated sequence
+            if len(new_seq) > len(qual):
+                # Extend the quality string by repeating the last character
+                qual += qual[-1] * (len(new_seq) - len(qual))
+            else:
+                # Truncate the quality string
+                qual = qual[:len(new_seq)]
+
+            out_f.write(f"@{seq_name}\n{new_seq}\n+\n{qual}\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a simulated FASTQ file from experimental reads.")
