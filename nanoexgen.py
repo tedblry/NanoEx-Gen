@@ -93,10 +93,10 @@ def main():
     parser.add_argument("infile", help="Input FASTQ file path.")
     parser.add_argument("ref_g", help="Reference genome file path.")
     parser.add_argument("output_simulated_fastq", help="Output simulated FASTQ file path.")
+    parser.add_argument("--seed", type=int, default=519, help="Random seed for reproducibility (default: 519).")
     args = parser.parse_args()
 
-    generate_simulated_fastq(args.infile, args.ref_g, args.output_simulated_fastq)
-
+    generate_simulated_fastq(args.infile, args.ref_g, args.output_simulated_fastq, args.seed)
 
 if __name__ == "__main__":
     main()
